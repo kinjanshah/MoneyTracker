@@ -1,43 +1,29 @@
 import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import { StyleSheet, TouchableWithoutFeedback, View, KeyboardAvoidingView} from 'react-native';
+import Router from './components/Router/Router';
+var DismissKeyboard = require('dismissKeyboard');
 
 export default class App extends Component {
+  
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Just for a test</Text>
-      </View>
+    <KeyboardAvoidingView style={styles.mainContainer} behavior="padding">
+      <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
+        <View style={styles.container}>
+          <Router></Router>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    flex:1,
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  mainContainer: {
+    backgroundColor:'#3498db',
+    flex:1
   },
 });
