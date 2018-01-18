@@ -1,7 +1,9 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, TouchableWithoutFeedback, Alert } from 'react-native';
+import styles from './Styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import FBSDK, {LoginManager} from 'react-native-fbsdk';
 
 // create a component
 class Login extends Component {
@@ -10,6 +12,21 @@ class Login extends Component {
         header: null
       };
 
+    fbAuth(){
+        LoginManager.logInWithReadPermissions(['public_profile']).then(
+            function(result) {
+              if (result.isCancelled) {
+                alert('Login cancelled' );
+              } else {
+                alert('Login success with permissions: '
+                  +result.grantedPermissions.toString());
+              }
+            },
+            function(error) {
+              alert('Login fail with error: ' + error);
+            }
+          );
+    }
     
     render() {
         const { navigate } = this.props.navigation;
@@ -63,6 +80,7 @@ class Login extends Component {
                                 name="facebook"
                                 backgroundColor="#3b5998"
                                 {...iconStyles}
+                                onPress={this.fbAuth}
                             >
                                 Facebook
                             </Icon.Button>
@@ -85,63 +103,6 @@ const iconStyles = {
     borderRadius: 10,
     iconStyle: { paddingVertical: 5 },
   };
-
-// define your styles
-const styles = StyleSheet.create({
-    mainContainer: {
-        backgroundColor:'#3498db',
-        flex:1
-    },
-    logoContainer:{
-        alignItems:'center',
-        justifyContent:'center',
-        flexGrow:1
-    },
-    logo:{
-        height:100,
-        width: 100
-    },
-    logoTitle:{
-        textAlign:'center',
-        color:'#FFF',
-        marginTop:10,
-        fontSize:30
-    },
-    container: {
-        padding:20
-    },
-    input:{
-        height: 40,
-        backgroundColor:'rgba(255,255,255,0.2)',
-        color:'#FFF',
-        marginBottom:20,
-        paddingLeft:15,
-        borderRadius:10
-    },
-    buttonContainer:{
-        backgroundColor:'#2980b9',
-        paddingVertical:15,
-        marginBottom:15,
-        borderRadius:10
-    },
-    buttonText:{
-        color:'#FFF',
-        textAlign:'center',
-        fontWeight:'bold'
-    },
-    forgotPasswordContainer:{
-        alignItems:'flex-end'
-    },
-    forgotPassword:{
-        color:'blue',
-        marginBottom:10
-    },
-    buttons: {
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        marginBottom: 30
-      },
-});
 
 //make this component available to the app
 export default Login;
