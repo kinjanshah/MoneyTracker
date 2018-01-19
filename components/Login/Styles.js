@@ -52,8 +52,16 @@ export const styles = StyleSheet.create({
     buttons: {
         justifyContent: 'space-between',
         flexDirection: 'row',
-        marginBottom: 30
+        marginBottom: 30,
       },
+    buttonFB:{
+        flex:1,
+        marginRight:5
+    },
+    buttonGoogle:{
+        flex:1,
+        marginLeft:5
+    }
 });
 
 export default styles;
