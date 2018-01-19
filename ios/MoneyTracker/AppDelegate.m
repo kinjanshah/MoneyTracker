@@ -11,6 +11,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+#import <RNGoogleSignin/RNGoogleSignin.h>
 
 @implementation AppDelegate
 
@@ -43,7 +44,11 @@
                                                                 openURL:url
                                                       sourceApplication:sourceApplication
                                                              annotation:annotation
-                  ];
+                  ] || [RNGoogleSignin application:application
+                                          openURL:url
+                                sourceApplication:sourceApplication
+                                       annotation:annotation
+                       ];
   // Add any custom logic here.
   return handled;
 } 
