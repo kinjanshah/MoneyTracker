@@ -35,10 +35,16 @@ class LoginButton extends Component {
                     Alert.alert('Login Successful');
                 }
             })
-            .catch((error) => {
-                this.setState({error:'', isLoading:false});
-                firebase.auth().sendPasswordResetEmail(this.props.email);
-            });
+            .catch((user) => firebase.auth().createUserWithEmailAndPassword(this.props.email, this.props.password)
+                .catch((error) => {
+                    this.setState({error:'Authentication Failed', isLoading: false});
+                    Alert.alert(error.message);
+                })
+            );
+            // .catch((error) => {
+            //     this.setState({error:'', isLoading:false});
+            //     firebase.auth().sendPasswordResetEmail(this.props.email);
+            // });
             // .catch((error) => {
             //     this.setState({error:'Authentication Failed', isLoading: false});
             //     Alert.alert(error.message);
